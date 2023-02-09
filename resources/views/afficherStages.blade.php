@@ -1,8 +1,9 @@
 @extends ('sommaire')
 @section('contenu1')
-<strong> <center> Liste des stages </center></strong>
+    <div id="contenu">
 
-<div id="Tableau">
+        <h1>Liste des stages </h1>
+
         <Table border='4'>
             <tr>
                 <th><b>Libelle</b></th>
@@ -11,16 +12,16 @@
                 <th><b>Modification</b></th>
 
             </tr>
-            @foreach($stages as $stage)
+            @foreach ($stages as $stage)
                 <tr>
                     <td>{{ $stage['libelle'] }}</td>
                     <td>{{ $stage['dateDebut'] }}</td>
                     <td>{{ $stage['dateFin'] }}</td>
-                    <td><a href="{{ route('chemin_modifierStage')}}">Modifier</a></td>
-                    <input type="hidden" name="id" value="{{ $stage['id'] }}">
+                    <td><a href="{{ route('chemin_modifierStage',['id'=>$stage['id']]) }}">Modifier</a></td>
                 </tr>
             @endforeach
 
         </Table>
-
+        <a href="{{ route('chemin_ajouterStage') }}" title="Ajouter un stage">Ajouter un stage</a>
+    </div>
 @endsection

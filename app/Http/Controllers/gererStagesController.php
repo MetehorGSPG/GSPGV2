@@ -106,7 +106,7 @@ class gererStagesController extends Controller
                 ->with('dateFin', $dateFin)
                 ->with('promotion', $promotion)
                 ->with('numero', $numero)
-                ->with ('method',$request->method());
+                ->with('method', $request->method());
             if (strlen($libelle) != 6) {
                 $erreurs[] =  "Libelle invalide";
                 $ok = 0;
@@ -114,9 +114,9 @@ class gererStagesController extends Controller
             if ($dateFin < $dateDebut) {
                 $erreurs[] = "Année non conforme";
                 $ok = 0;
-            } 
+            }
             if ($ok == 1) {
-                $req = PdoGspg::getMajStages($id,$libelle, $dateDebut, $dateFin, $promotion, $numero);
+                $req = PdoGspg::getMajStages($id, $libelle, $dateDebut, $dateFin, $promotion, $numero);
                 var_dump($req);
                 $message = "Votre stage a été mise à jour";
                 $erreurs = null;
@@ -137,6 +137,49 @@ class gererStagesController extends Controller
                 ->with('lstStage', session('lstStage'))
                 ->with('lstOption', session('lstOption'));
             return $view;
+        } else {
+            return view('connexion')->with('erreurs', null);
+        }
+    }
+
+    function enregAjoutStage(Request $request)
+    {
+        if (session('gestionnaire') != null) {
+
+            $libelle = $request['libelle'];
+            $dateDebut = $request['dateDebut'];
+            $dateFin = $request['dateFin'];
+            $promotion = $request['promotion'];
+            $numero = $request['numero'];
+            $message = "";
+            $erreurs[] = "";
+            $ok = 1;
+            $view = view('ajouterStages')
+                ->with('gestionnaire', session('gestionnaire'))
+                ->with('lstStage', session('lstStage'))
+                ->with('lstOption', session('lstOption'))
+                ->with('libelle', $libelle)
+                ->with('dateDebut', $dateDebut)
+                ->with('dateFin', $dateFin)
+                ->with('promotion', $promotion)
+                ->with('numero', $numero)
+                ->with('method', $request->method());
+            if (strlen($libelle) != 6) {
+                $erreurs[] =  "Libelle invalide";
+                $ok = 0;
+            }
+            if ($dateFin < $dateDebut) {
+                $erreurs[] = "Année non conforme";
+                $ok = 0;
+            }
+            if ($ok == 1) {
+                $req = PdoGspg::ajouterStages($libelle, $dateDebut, $dateFin, $promotion, $numero);
+                var_dump($req);
+                $message = "Votre stage a été ajouté";
+                $erreurs = null;
+            }
+            return $view->with('erreurs', $erreurs)
+                ->with('message', $message);
         } else {
             return view('connexion')->with('erreurs', null);
         }

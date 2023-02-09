@@ -42,6 +42,8 @@ class PdoGspg{
 		return $ligne;
 	}
 
+	// CAS STAGE --------------------------------------------------------------
+
 	public function getStages(){
 		$req = "select * from stage";
 		$rs = $this->monPdo->query($req);
@@ -62,7 +64,6 @@ class PdoGspg{
 	{
 		$req = "select id, libelle, dateDebut, dateFin, promotion, numero from stage WHERE id ='" . $id . "'";
 		$rs = $this->monPdo->query($req);
-		dd($req);
 		$ligne = $rs->fetch();
 		return $ligne;
 	}
@@ -71,10 +72,17 @@ class PdoGspg{
 	{
 		$req = "update stage set libelle = '$libelle', dateDebut = '$dateDebut', dateFin = '$dateFin', promotion = '$promotion', numero = '$numero'";
 		$req .= "where id = '$id'";
+		// dd($req);
 		$rs = $this->monPdo->exec($req);
 		return $rs;
 	}
-
+	
+	public function ajouterStages($libelle, $dateDebut, $dateFin, $promotion, $numero)
+	{
+		$req = "insert into stage (libelle,dateDebut,dateFin,promotion,numero) VALUES('$libelle','$dateDebut','$dateFin','$promotion','$numero')";
+		$rs = $this->monPdo->query($req);
+		return $rs;
+	}
 
 
 
