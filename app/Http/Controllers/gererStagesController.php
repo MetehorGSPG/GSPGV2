@@ -69,6 +69,8 @@ class gererStagesController extends Controller
             $dateFin = $stage['dateFin'];
             $promotion = $stage['promotion'];
             $numero = $stage['numero'];
+            $message = "";
+            $erreurs[] = "";
             $view = view('modifierStages')
                 ->with('gestionnaire', session('gestionnaire'))
                 ->with('lstStage', session('lstStage'))
@@ -77,7 +79,10 @@ class gererStagesController extends Controller
                 ->with('dateDebut', $dateDebut)
                 ->with('dateFin', $dateFin)
                 ->with('promotion', $promotion)
-                ->with('numero', $numero);
+                ->with('numero', $numero)
+                ->with('id', $id)
+                ->with('erreurs', null)
+                ->with('message', null);
             return $view;
         } else {
             return view('connexion')->with('erreurs', null);
@@ -94,9 +99,8 @@ class gererStagesController extends Controller
             $promotion = $request['promotion'];
             $numero = $request['numero'];
             $id = $request['id'];
-            var_dump($libelle);
-            var_dump($id);
             $ok = 1;
+            $message = "";
             $view = view('modifierStages')
                 ->with('gestionnaire', session('gestionnaire'))
                 ->with('lstStage', session('lstStage'))
@@ -106,7 +110,7 @@ class gererStagesController extends Controller
                 ->with('dateFin', $dateFin)
                 ->with('promotion', $promotion)
                 ->with('numero', $numero)
-                ->with('method', $request->method());
+                ->with('id', $id);
             if (strlen($libelle) != 6) {
                 $erreurs[] =  "Libelle invalide";
                 $ok = 0;
@@ -116,8 +120,7 @@ class gererStagesController extends Controller
                 $ok = 0;
             }
             if ($ok == 1) {
-                $req = PdoGspg::getMajStages($id, $libelle, $dateDebut, $dateFin, $promotion, $numero);
-                var_dump($req);
+                PdoGspg::getMajStages($id, $libelle, $dateDebut, $dateFin, $promotion, $numero);
                 $message = "Votre stage a été mise à jour";
                 $erreurs = null;
             }
@@ -131,11 +134,15 @@ class gererStagesController extends Controller
     function ajouterStage()
     {
         if (session('gestionnaire') != null) {
-
+            $message = "";
+            $erreurs[] = "";
             $view = view('ajouterStages')
                 ->with('gestionnaire', session('gestionnaire'))
                 ->with('lstStage', session('lstStage'))
-                ->with('lstOption', session('lstOption'));
+                ->with('lstOption', session('lstOption'))
+                ->with('erreurs', null)
+                ->with('message', null);
+                
             return $view;
         } else {
             return view('connexion')->with('erreurs', null);
@@ -152,7 +159,6 @@ class gererStagesController extends Controller
             $promotion = $request['promotion'];
             $numero = $request['numero'];
             $message = "";
-            $erreurs[] = "";
             $ok = 1;
             $view = view('ajouterStages')
                 ->with('gestionnaire', session('gestionnaire'))
@@ -162,8 +168,7 @@ class gererStagesController extends Controller
                 ->with('dateDebut', $dateDebut)
                 ->with('dateFin', $dateFin)
                 ->with('promotion', $promotion)
-                ->with('numero', $numero)
-                ->with('method', $request->method());
+                ->with('numero', $numero);
             if (strlen($libelle) != 6) {
                 $erreurs[] =  "Libelle invalide";
                 $ok = 0;
@@ -173,8 +178,7 @@ class gererStagesController extends Controller
                 $ok = 0;
             }
             if ($ok == 1) {
-                $req = PdoGspg::ajouterStages($libelle, $dateDebut, $dateFin, $promotion, $numero);
-                var_dump($req);
+                PdoGspg::ajouterStages($libelle, $dateDebut, $dateFin, $promotion, $numero);
                 $message = "Votre stage a été ajouté";
                 $erreurs = null;
             }

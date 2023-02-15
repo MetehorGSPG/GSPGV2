@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use PdoGspg;
+use App\Facades\PdoGspg;
 
 class connexionController extends Controller
 {

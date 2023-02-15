@@ -22,6 +22,7 @@
             @endforeach
 
         </Table>
-        <a href="{{ route('chemin_ajouterStage') }}" title="Ajouter un stage">Ajouter un stage</a>
+        <br>
+        <center><a href="{{ route('chemin_ajouterStage') }}" title="Ajouter un stage">Ajouter un stage</a></center>
     </div>
 @endsection
