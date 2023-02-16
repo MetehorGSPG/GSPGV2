@@ -81,6 +81,7 @@ Route::post('enregAjoutStagiaires',[
 ]);
 
 //------------------- Cas ENTREPRISES -----------------------------------
+
 Route::get('afficherEntreprises',[
         'as'=>'chemin_afficherEntreprise',
         'uses'=>'gererEntreprisesController@afficherEntreprise'
@@ -129,3 +130,30 @@ Route::post('enregAjoutFormateurs',[
         'as'=>'chemin_enregAjoutFormateurs',
         'uses'=>'gererFormateursController@enregAjoutFormateurs'
 ]);
+
+//------------------- Cas CONVENTIONS  -----------------------------------
+
+Route::get('afficherConventions',[
+        'as'=>'chemin_afficherConvention',
+        'uses'=>'gererConventionsController@afficherConvention'
+ ]);
+
+ Route::post('enregModifConventions',[
+        'as'=>'chemin_enregModifConvention',
+        'uses'=>'gererConventionsController@enregModifConvention'
+ ]);
+ 
+ Route::get('ajouterConventions',[
+        'as'=>'chemin_ajouterConvention',
+        'uses'=>'gererConventionsController@ajouterConvention'
+ ]);
+ 
+ Route::get('afficherConventions',[
+        'as'=>'chemin_afficherConvention',
+        'uses'=>'gererConventionsController@afficherConvention'
+ ]);
+ 
+ Route::post('enregAjoutConventions',[
+        'as'=>'chemin_enregAjoutConvention',
+        'uses'=>'gererConventionsController@enregAjoutConvention'
+ ]);

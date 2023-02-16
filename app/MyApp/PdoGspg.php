@@ -1,53 +1,61 @@
 <?php
+
 namespace App\MyApp;
+
 use PDO;
 use Illuminate\Support\Facades\Config;
-class PdoGspg{
-        private static $serveur;
-        private static $bdd;
-        private static $user;
-        private static $mdp;
-        private  $monPdo;
-	
-/**
- * crée l'instance de PDO qui sera sollicitée
- * pour toutes les méthodes de la classe
- */				
-	public function __construct(){
-        
-        self::$serveur='mysql:host=' . Config::get('database.connections.mysql.host');
-        self::$bdd='dbname=' . Config::get('database.connections.mysql.database');
-        self::$user=Config::get('database.connections.mysql.username') ;
-        self::$mdp=Config::get('database.connections.mysql.password');	  
-        $this->monPdo = new PDO(self::$serveur.';'.self::$bdd, self::$user, self::$mdp); 
-  		$this->monPdo->query("SET CHARACTER SET utf8");
-	}
-	public function _destruct(){
-		$this->monPdo =null;
-	}
-	
 
-/**
- * Retourne les informations d'un gestionnaire
+class PdoGspg
+{
+	private static $serveur;
+	private static $bdd;
+	private static $user;
+	private static $mdp;
+	private  $monPdo;
+
+	/**
+	 * crée l'instance de PDO qui sera sollicitée
+	 * pour toutes les méthodes de la classe
+	 */
+	public function __construct()
+	{
+
+		self::$serveur = 'mysql:host=' . Config::get('database.connections.mysql.host');
+		self::$bdd = 'dbname=' . Config::get('database.connections.mysql.database');
+		self::$user = Config::get('database.connections.mysql.username');
+		self::$mdp = Config::get('database.connections.mysql.password');
+		$this->monPdo = new PDO(self::$serveur . ';' . self::$bdd, self::$user, self::$mdp);
+		$this->monPdo->query("SET CHARACTER SET utf8");
+	}
+	public function _destruct()
+	{
+		$this->monPdo = null;
+	}
+
+
+	/**
+	 * Retourne les informations d'un gestionnaire
  
- * @param $login 
- * @param $mdp
- * @return l'id, le nom et le prénom sous la forme d'un tableau associatif 
-*/
-	public function getInfosGestionnaire($login, $mdp){
+	 * @param $login 
+	 * @param $mdp
+	 * @return l'id, le nom et le prénom sous la forme d'un tableau associatif 
+	 */
+	public function getInfosGestionnaire($login, $mdp)
+	{
 		$req = "select id, nom, prenom from gestionnaire 
-        where login='" . $login . "' and mdp='" . $mdp ."'";
-    	$rs = $this->monPdo->query($req);
+        where login='" . $login . "' and mdp='" . $mdp . "'";
+		$rs = $this->monPdo->query($req);
 		$ligne = $rs->fetch();
 		return $ligne;
 	}
 
 	// Cas STAGES --------------------------------------------------------------------------
 
-	public function getStages(){
+	public function getStages()
+	{
 		$req = "select * from stage";
 		$rs = $this->monPdo->query($req);
-		$lignes= $rs->fetchAll();
+		$lignes = $rs->fetchAll();
 		return $lignes;
 	}
 
@@ -55,7 +63,7 @@ class PdoGspg{
 	{
 		$req = "select id, libelle, dateDebut, dateFin, promotion, numero from stage WHERE promotion ='" . $promotion . "'";
 		$rs = $this->monPdo->query($req);
-		$lignes= $rs->fetchAll();
+		$lignes = $rs->fetchAll();
 		return $lignes;
 	}
 
@@ -76,7 +84,7 @@ class PdoGspg{
 		$rs = $this->monPdo->exec($req);
 		return $rs;
 	}
-	
+
 	public function ajouterStages($libelle, $dateDebut, $dateFin, $promotion, $numero)
 	{
 		$req = "insert into stage (libelle,dateDebut,dateFin,promotion,numero) VALUES('$libelle','$dateDebut','$dateFin','$promotion','$numero')";
@@ -90,7 +98,7 @@ class PdoGspg{
 	{
 		$req = "select * from stagiaire";
 		$rs = $this->monPdo->query($req);
-		$lignes= $rs->fetchAll();
+		$lignes = $rs->fetchAll();
 		return $lignes;
 	}
 
@@ -124,7 +132,7 @@ class PdoGspg{
 	{
 		$req = "select * from entreprise";
 		$rs = $this->monPdo->query($req);
-		$lignes= $rs->fetchAll();
+		$lignes = $rs->fetchAll();
 		return $lignes;
 	}
 
@@ -157,7 +165,7 @@ class PdoGspg{
 	{
 		$req = "select * from formateur";
 		$rs = $this->monPdo->query($req);
-		$lignes= $rs->fetchAll();
+		$lignes = $rs->fetchAll();
 		return $lignes;
 	}
 
@@ -176,7 +184,7 @@ class PdoGspg{
 		return $ligne;
 	}
 
-	public function majFormateurs($id,$nom, $prenom, $mail, $tel)
+	public function majFormateurs($id, $nom, $prenom, $mail, $tel)
 	{
 		$req = "update formateur set nom = '$nom', prenom = '$prenom', mail = '$mail', tel = '$tel' ";
 		$req .= "where id = '$id'";
@@ -184,4 +192,21 @@ class PdoGspg{
 		return $rs;
 	}
 
+	// Cas CONVENTIONS ---------------------------------------------------------------------
+
+	public function stagiaireConventions($libelle, $option)
+	{
+		$req = "SELECT stageStagiaire.id AS id,nom,prenom from stagiaire, stageStagiaire, stage WHERE stagiaire.id = stageStagiaire.idStagiaire and stageStagiaire.idStage = stage.id and stage.id = '$libelle' and stagiaire.choixOption = '$option'";
+		$rs = $this->monPdo->query($req);
+		$lignes = $rs->fetchAll();
+		return $lignes;
+	}
+
+	public function stagiaireSansConventions($promotion, $libelle, $option)
+	{
+		$req = "select stagiaire.id,stagiaire.nom,stagiaire.prenom FROM stagiaire WHERE promotion = '$promotion' and stagiaire.choixOption = '$option' and stagiaire.id not in (select stagestagiaire.idStagiaire from stagestagiaire, stage where stagestagiaire.idStage = stage.id and stage.id ='$libelle')";
+		$rs = $this->monPdo->query($req);
+		$lignes = $rs->fetchAll();
+		return $lignes;
+	}
 }

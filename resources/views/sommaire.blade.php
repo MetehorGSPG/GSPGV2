@@ -18,6 +18,10 @@
                      <a href="{{ route('chemin_choixstage')}}" title="Choisir le stage">Choisir le stage</a>
                   </li>
                   <li class="smenu">
+                    <a href="{{ route('chemin_afficherConvention')}}" title="Afficher les stages">
+                      Gérer les conventions</a>
+                  </li>
+                  <li class="smenu">
                     <a href="{{ route('chemin_afficherStage')}}" title="Afficher les stages">
                       Gérer les stages</a>
                   </li>
