@@ -11,14 +11,14 @@
                    </li>
                    <li>
                     <strong>
-                      Stage : {{$lstStage . " Option : " . $lstOption}}
+                      Stage : {{$lstStage . " Option : " . $lstOption }}
                     </strong>
                    </li>
                   <li class="smenu">
                      <a href="{{ route('chemin_choixstage')}}" title="Choisir le stage">Choisir le stage</a>
                   </li>
                   <li class="smenu">
-                    <a href="{{ route('chemin_afficherConvention')}}" title="Afficher les stages">
+                    <a href="{{ route('chemin_afficherConvention')}}" title="Afficher les conventions">
                       Gérer les conventions</a>
                   </li>
                   <li class="smenu">

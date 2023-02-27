@@ -196,7 +196,7 @@ class PdoGspg
 
 	public function stagiaireConventions($libelle, $option)
 	{
-		$req = "SELECT stageStagiaire.id AS id,nom,prenom from stagiaire, stageStagiaire, stage WHERE stagiaire.id = stageStagiaire.idStagiaire and stageStagiaire.idStage = stage.id and stage.id = '$libelle' and stagiaire.choixOption = '$option'";
+		$req = "SELECT stageStagiaire.id AS id,nom, prenom from stagiaire, stageStagiaire, stage WHERE stagiaire.id = stageStagiaire.idStagiaire and stageStagiaire.idStage = stage.id and stage.libelle = '$libelle' and stagiaire.choixOption = '$option'";
 		$rs = $this->monPdo->query($req);
 		$lignes = $rs->fetchAll();
 		return $lignes;
@@ -204,9 +204,83 @@ class PdoGspg
 
 	public function stagiaireSansConventions($promotion, $libelle, $option)
 	{
-		$req = "select stagiaire.id,stagiaire.nom,stagiaire.prenom FROM stagiaire WHERE promotion = '$promotion' and stagiaire.choixOption = '$option' and stagiaire.id not in (select stagestagiaire.idStagiaire from stagestagiaire, stage where stagestagiaire.idStage = stage.id and stage.id ='$libelle')";
+		$req = "select stagiaire.id,stagiaire.nom,stagiaire.prenom FROM stagiaire 
+		WHERE promotion = '$promotion'
+		and stagiaire.choixOption = '$option' 
+		and stagiaire.id 
+		not in (select stagestagiaire.idStagiaire from stagestagiaire, stage, stagiaire 
+				where stagestagiaire.idStage = stage.id and stageStagiaire.idStagiaire = stagiaire.id 
+				and stage.libelle ='$libelle'
+				and stagiaire.choixOption = '$option')";
 		$rs = $this->monPdo->query($req);
 		$lignes = $rs->fetchAll();
 		return $lignes;
+	}
+
+	public function getConventionById($id)
+	{
+		$req = "select id,idStagiaire,idEntreprise,idFormateur,idStage from stageStagiaire WHERE id ='" . $id . "'";
+		$rs = $this->monPdo->query($req);
+		$ligne = $rs->fetch();
+		return $ligne;
+	}
+
+	public function ajouterConvention($idStagiaire, $idEntreprise, $idFormateur, $libelle)
+	{
+		$req = "insert into stageStagiaire (idStagiaire,idEntreprise,idFormateur,idStage) VALUES('$idStagiaire', '$idEntreprise', '$idFormateur', (SELECT id FROM stage WHERE stage.libelle = '$libelle'))";
+		$rs = $this->monPdo->query($req);
+		var_dump($req);
+		return $rs;
+	}
+
+	// public function getIdConvention($idStagiaire, $libelleStage)
+	// {
+	// 	$req = "select stageStagiaire.id as idConvention from stageStagiaire, stage 
+	// 	where stageStagiaire.idStage = stage.id
+	// 	and idStagiaire = '" . $idStagiaire . "' and stage.libelle =  '" . $libelleStage . "'";
+	// 	$rs = $this->monPdo->query($req);
+	// 	$ligne = $rs->fetch();
+	// 	return $ligne['idConvention'];
+	// }
+
+	public function getInfosConvention($libelleStage, $idStagiaire){
+		$req = "select stagiaire.nom as nomStagiaire, stagiaire.prenom as prenomStagiaire, entreprise.nom as nomEntreprise, formateur.nom as nomFormateur from stageStagiaire, stagiaire, entreprise, formateur 
+		where stageStagiaire.idFormateur = formateur.id 
+		and stageStagiaire.idEntreprise = entreprise.id
+		and stageStagiaire.idStagiaire = stagiaire.id
+		and stagiaire.id = '" . $idStagiaire . "' 
+		and stage.libelle = '" . $libelleStage . "'";
+		$rs = $this->monPdo->query($req);
+		$ligne = $rs->fetch();
+		return $ligne;
+	}
+
+	public function majConvention($id, $idEntreprise, $idFormateur)
+	{
+		$req = "update stageStagiaire set idEntreprise = '$idEntreprise', idFormateur = '$idFormateur'";
+		$req .= "where id = '$id'";
+		$rs = $this->monPdo->exec($req);
+		return $rs;
+	}
+
+	// Cas PRODUCTIONS ÉTATS ---------------------------------------------------------------------
+
+	public function conventionSigne($libelle, $option)
+	{
+		$req = "SELECT stageStagiaire.id as idConvention, stageStagiaire.conventionSigne AS conventionSigne,nom, prenom from stagiaire, stageStagiaire, stage
+		WHERE stagiaire.id = stageStagiaire.idStagiaire and stageStagiaire.idStage = stage.id 
+		and stage.libelle = '$libelle' and stagiaire.choixOption = '$option'";
+		$rs = $this->monPdo->query($req);
+		$ligne = $rs->fetchAll();
+		return $ligne;
+	}
+
+	
+	public function majConventionSigne($id, $conventionSigne)
+	{
+		$req = "update stageStagiaire set conventionSigne = '$conventionSigne'";
+		$req .= "where id = '$id'";
+		$rs = $this->monPdo->exec($req);
+		return $rs;
 	}
 }

@@ -25,7 +25,7 @@ class connexionController extends Controller
             return view('sommaire')
                     ->with('gestionnaire',session('gestionnaire'))
                     ->with('lstStage', $lstStage)
-                    ->with('lstOption', $lstOption);;
+                    ->with('lstOption', $lstOption);
         }
     } 
     function deconnecter(){

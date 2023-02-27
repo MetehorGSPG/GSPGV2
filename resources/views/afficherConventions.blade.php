@@ -32,5 +32,7 @@
 
         </Table>
 
+        <a href={{ route("chemin_afficherConventionSigne")}}>Etat des conventions</a>
+
     </div>
 @endsection

@@ -178,7 +178,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MyPdoServiceProvider::class,
-        App\Providers\MyDateServiceProvider::class
+        App\Providers\MyDateServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+
        
        
         
@@ -234,7 +236,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PdoGspg' => App\Facades\PdoGspg::class,
         'MyDate' => App\Facades\MyDate::class,
-        'MyApp' => App\Facades\MyApp::class
+        'MyApp' => App\Facades\MyApp::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         
        
     ],

@@ -9,7 +9,7 @@
     <div class="corpsForm">
         <fieldset>
 			 @includeWhen($erreurs != null, 'msgerreurs', ['erreurs' => $erreurs]) 
-             @includeWhen($message != "", 'message', ['message' => $message])
+             @includeWhen($message != "", 'message')
             <p><label>Nom de l'entreprise : </label>
                 <input type="text" name="nom">
             <p><label>Adresse de l'entreprise : </label>
