@@ -8,6 +8,7 @@
                 <th><b>Nom du stagiaire</b></th>
                 <th><b>Prénom du stagiaire</b></th>
                 <th><b>Modification/Création</b></th>
+                <th><b>PDF</b></th>
             </tr>
 
             @foreach ($existeConventions as $existeConvention)
@@ -16,6 +17,7 @@
                     <td>{{ $existeConvention['prenom'] }}</td>
                     <td><a href="{{ route('chemin_modifierConvention', ['id' => $existeConvention['id']]) }}">Modifier</a>
                     </td>
+                    <td><a href="{{ route('chemin_getPdf', ['id' => $existeConvention['id']]) }}">Télécharger au format pdf</a></td>
                 </tr>
             @endforeach
 
@@ -32,7 +34,7 @@
 
         </Table>
 
-        <a href={{ route("chemin_afficherConventionSigne")}}>Etat des conventions</a>
+        <a href={{ route('chemin_afficherConventionSigne') }}>Etat des conventions</a>
 
     </div>
 @endsection

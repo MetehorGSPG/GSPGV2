@@ -233,23 +233,15 @@ class PdoGspg
 		return $rs;
 	}
 
-	// public function getIdConvention($idStagiaire, $libelleStage)
-	// {
-	// 	$req = "select stageStagiaire.id as idConvention from stageStagiaire, stage 
-	// 	where stageStagiaire.idStage = stage.id
-	// 	and idStagiaire = '" . $idStagiaire . "' and stage.libelle =  '" . $libelleStage . "'";
-	// 	$rs = $this->monPdo->query($req);
-	// 	$ligne = $rs->fetch();
-	// 	return $ligne['idConvention'];
-	// }
-
-	public function getInfosConvention($libelleStage, $idStagiaire){
-		$req = "select stagiaire.nom as nomStagiaire, stagiaire.prenom as prenomStagiaire, entreprise.nom as nomEntreprise, formateur.nom as nomFormateur from stageStagiaire, stagiaire, entreprise, formateur 
+	public function getInfosConvention($libelle, $id){
+		$req = "select stagiaire.nom as nomStagiaire, stagiaire.prenom as prenomStagiaire, entreprise.nom as nomEntreprise, formateur.nom as nomFormateur 
+		from stageStagiaire, stagiaire, entreprise, formateur, stage
 		where stageStagiaire.idFormateur = formateur.id 
 		and stageStagiaire.idEntreprise = entreprise.id
 		and stageStagiaire.idStagiaire = stagiaire.id
-		and stagiaire.id = '" . $idStagiaire . "' 
-		and stage.libelle = '" . $libelleStage . "'";
+		and stageStagiaire.idStage = stage.id
+		and stageStagiaire.id = '" . $id . "' 
+		and stage.libelle = '" . $libelle . "'";
 		$rs = $this->monPdo->query($req);
 		$ligne = $rs->fetch();
 		return $ligne;

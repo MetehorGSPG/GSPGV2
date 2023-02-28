@@ -10,9 +10,7 @@
                 <fieldset>
                     
                     @includeWhen($message != '', 'message', ['message' => $message])
-                    @if ($message != '')
-                    <a href="{{ route('chemin_getPdf') }}">Télécharger au format pdf</a>
-                    @endif
+                    
                     <p><label>stagiaire: {{ $nomStagiaire }} </label>
                         <input type="hidden" name="idStagiaire" value="{{ $id }}">
                         <Br>

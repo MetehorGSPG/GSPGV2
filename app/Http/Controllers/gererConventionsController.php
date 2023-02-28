@@ -32,6 +32,30 @@ class gererConventionsController extends Controller
         }
     }
 
+    function pdf(Request $request)
+    {
+        $id = $request['id'];
+        $libelle = session('lstStage');
+        $ligne = PdoGspg::getInfosConvention($libelle, $id);
+        if (session('gestionnaire') != null) {
+            $data = [
+                'title' => 'Convention au format pdf',
+                'date' => date('m/d/Y'),
+                'stage' => session('lstStage'),
+                'option' => session('lstOption'),
+                'nomStagiaire' => $ligne['nomStagiaire'],
+                'prenomStagiaire' => $ligne['prenomStagiaire'],
+                'nomEntreprise' => $ligne['nomEntreprise'],
+                'nomFormateur' => $ligne['nomFormateur']
+            ];
+            view()->share('data', $data);
+            $pdf = PDF::loadView('PdfConventions', $data);
+            return $pdf->download("convention" . $data['nomStagiaire'] . ".pdf");
+        } else {
+            return view('connexion')->with('erreurs', null);
+        }
+    }
+
     function ajouterConvention(Request $request)
     {
         if (session('gestionnaire') != null) {
@@ -88,9 +112,6 @@ class gererConventionsController extends Controller
                 ->with('rs', $rs);
             if ($rs != null) {
                 $message = "Convention ajoutée";
-                // $idConvention = PdoGspg::getIdConvention($idStagiaire, $libelle);
-                // session(['idConvention' => $idConvention]);
-                // var_dump($idConvention);
             } else {
                 $message = "Veuillez réessayer plus tard";
             }
@@ -100,28 +121,7 @@ class gererConventionsController extends Controller
         }
     }
 
-    function pdf(Request $request)
-    {
-        // $idConvention = session('idConvention');
-        $ligne = PdoGspg::getInfosConvention($idConvention);
-        if (session('gestionnaire') != null) {
-            $data = [
-                'title' => 'Convention au format pdf',
-                'date' => date('m/d/Y'),
-                'stage' => session('lstStage'),
-                'option' => session('lstOption'),
-                'nomStagiaire' => $ligne['nomStagiaire'],
-                'prenomStagiaire' => $ligne['prenomStagiaire'],
-                'nomEntreprise' => $ligne['nomEntreprise'],
-                'nomFormateur' => $ligne['nomFormateur']
-            ];
-            view()->share('data', $data);
-            $pdf = PDF::loadView('PdfConventions', $data);
-            return $pdf->download("convention" . ".pdf");
-        } else {
-            return view('connexion')->with('erreurs', null);
-        }
-    }
+
 
     function modifierConvention(Request $request)
     {
@@ -183,7 +183,8 @@ class gererConventionsController extends Controller
         }
     }
 
-    function afficherConventionSigne(){
+    function afficherConventionSigne()
+    {
         if (session('gestionnaire') != null) {
             $libelle = session('lstStage');
             $option =  session('lstOption');
@@ -194,13 +195,13 @@ class gererConventionsController extends Controller
                 ->with('lstOption', session('lstOption'))
                 ->with('conventionSignes', $conventionSignes);
             return $view;
-
         } else {
             return view('connexion')->with('erreurs', null);
         }
     }
 
-    function majConventionSigne(Request $request){
+    function majConventionSigne(Request $request)
+    {
         if (session('gestionnaire') != null) {
             dd($_REQUEST);
             $libelle = session('lstStage');
@@ -212,7 +213,6 @@ class gererConventionsController extends Controller
                 ->with('lstOption', session('lstOption'))
                 ->with('conventionSignes', $conventionSignes);
             return $view;
-
         } else {
             return view('connexion')->with('erreurs', null);
         }
