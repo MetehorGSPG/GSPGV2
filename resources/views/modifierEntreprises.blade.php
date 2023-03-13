@@ -27,9 +27,9 @@
             <input type='hidden' name = 'id' size = 7 value="{{ $id }}">
         </fieldset>
     </div><!--fin classForm-->
-	<div id = "balise">  
-    <p><input type="submit" value="Envoyer">
-	 </div>	
+    <center>
+         <p><input type="submit" value="Envoyer">
+    </center>
   </form>
  </div> <!--fin contenu-->
 @endsection

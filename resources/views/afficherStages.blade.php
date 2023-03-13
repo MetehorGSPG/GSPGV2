@@ -2,7 +2,7 @@
 @section('contenu1')
     <div id="contenu">
 
-        <h1>Liste des stages </h1>
+        <h1>Stages de l'année en cours</h1>
 
         <Table border='4'>
             <tr>

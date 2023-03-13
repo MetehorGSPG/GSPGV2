@@ -8,8 +8,8 @@
             {{ csrf_field() }}
             <div class="corpsForm">
                 <fieldset>
-                    @includeWhen($erreurs != null, 'msgerreurs', ['erreurs' => $erreurs]) 
-                    @includeWhen($message != "", 'message', ['message' => $message])
+                    @includeWhen($erreurs != null, 'msgerreurs', ['erreurs' => $erreurs])
+                    @includeWhen($message != '', 'message', ['message' => $message])
                     <p><label>nom </label>
                         <input type="text" name="nom" value="{{ $nom }}">
                     <p><label>prenom : </label>
@@ -18,11 +18,13 @@
                         <input type="mail" name="mail" value="{{ $mail }}">
                     <p><label>tel : </label>
                         <input type="text" name="tel" value="{{ $tel }}">
-                        <input type='hidden' name = 'id' size = 7 value="{{ $id }}">
+                        <input type='hidden' name='id' size=7 value="{{ $id }}">
                 </fieldset>
             </div>
             <!--fin classForm-->
-            <p><input type="submit" value="Envoyer">
+            <center>
+                <p><input type="submit" value="Envoyer">
+            </center>
         </form>
     </div>
     <!--fin contenu-->

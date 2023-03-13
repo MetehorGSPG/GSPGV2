@@ -1,0 +1,28 @@
+.container{
+    /* justify-content: center; */
+}
+
+.article1 h3 h4{
+    font-weight: bold;
+}
+
+fieldset{
+    background-color: gray;
+}
+
+.article1 fieldset{
+    background-color: white;
+}
+
+h1{
+    color:navy;
+    text-align: center;
+}
+
+h4{
+    margin-left: 40px;
+}
+
+#signatures{
+    display: inline-flex;
+}

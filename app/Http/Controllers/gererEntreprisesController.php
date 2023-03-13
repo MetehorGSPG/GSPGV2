@@ -91,7 +91,7 @@ class gererEntreprisesController extends Controller
                 $ok = 0;
             }
             if ($ok == 1) {
-                PdoGspg::getMajEntreprises($id, $nom, $adresse, $ville, $mail, $tel, $nomTuteurStage, $telTuteurStage);
+                PdoGspg::majEntreprises($id, $nom, $adresse, $ville, $mail, $tel, $nomTuteurStage, $telTuteurStage);
                 $message = "Votre entreprise a été mise à jour";
                 $erreurs = null;
             }

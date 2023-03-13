@@ -22,6 +22,9 @@
                       Gérer les conventions</a>
                   </li>
                   <li class="smenu">
+                    <a href={{route('chemin_productionEtatConventions')}} title="Etat des conventions">Production d'états des conventions</a>
+                  </li>
+                  <li class="smenu">
                     <a href="{{ route('chemin_afficherStage')}}" title="Afficher les stages">
                       Gérer les stages</a>
                   </li>

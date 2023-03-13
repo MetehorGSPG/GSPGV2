@@ -10,9 +10,6 @@
 
                 <fieldset>
                     @includeWhen($message != '', 'message', ['message' => $message])
-                    @if ($message != '')
-                    <a href="{{ route('chemin_getPdf') }}">Afficher au format pdf</a>
-                    @endif
                     <p><label>Selectionnez l'entreprise: </label>
                         <select name="entreprise" id="entreprise">
                             @foreach ($entreprises as $entreprise)

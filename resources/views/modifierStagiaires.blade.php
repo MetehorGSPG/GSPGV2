@@ -28,8 +28,10 @@
                         
                 </fieldset>
             </div>
+            <center>
+                <p><input type="submit" value="Envoyer">
+            </center>
             <!--fin classForm-->
-            <p><input type="submit" value="Envoyer">
         </form>
     </div>
     <!--fin contenu-->

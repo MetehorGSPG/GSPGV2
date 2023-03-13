@@ -17,11 +17,10 @@
                     <td>{{ $existeConvention['prenom'] }}</td>
                     <td><a href="{{ route('chemin_modifierConvention', ['id' => $existeConvention['id']]) }}">Modifier</a>
                     </td>
-                    <td><a href="{{ route('chemin_getPdf', ['id' => $existeConvention['id']]) }}">Télécharger au format pdf</a></td>
+                    <td><a href="{{ route('chemin_getPdf', ['id' => $existeConvention['id']]) }}">Télécharger au format
+                            pdf</a></td>
                 </tr>
             @endforeach
-
-
 
             @foreach ($sansConventions as $sansConvention)
                 <tr>
@@ -33,8 +32,9 @@
             @endforeach
 
         </Table>
-
-        <a href={{ route('chemin_afficherConventionSigne') }}>Etat des conventions</a>
-
+        <br>
+        <center>
+            <a href={{ route('chemin_afficherConventionSigne') }}>Etat des signatures des conventions</a><br>
+        </center>
     </div>
 @endsection

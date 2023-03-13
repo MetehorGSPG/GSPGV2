@@ -163,6 +163,9 @@ Route::post('enregAjoutConventions', [
         'uses' => 'gererConventionsController@enregAjoutConvention'
 ]);
 
+//------------------- Cas PRODUCTION D'ETATS  -----------------------------------
+
+
 Route::get('pdf', [
         'as' => 'chemin_getPdf',
         'uses' => 'gererConventionsController@pdf'
@@ -176,4 +179,19 @@ Route::get('afficherConventionSigne', [
 Route::post('majConventionSigne', [
         'as' => 'chemin_majConventionSigne',
         'uses' => 'gererConventionsController@majConventionSigne'
+]);
+
+Route::get('productionEtatConventions', [
+        'as' => 'chemin_productionEtatConventions',
+        'uses' =>'gererConventionsController@productionEtatConvention'
+]); 
+
+Route::post('afficherEtatConvention', [
+        'as' => 'chemin_afficherEtatConvention',
+        'uses' => 'gererConventionsController@afficherEtatConvention'
+]);
+
+Route::get('etatPdf', [
+        'as' => 'chemin_getEtatPdf',
+        'uses' => 'gererConventionsController@afficherEtatConventionPdf'
 ]);

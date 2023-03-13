@@ -152,7 +152,6 @@ class gererFormateursController extends Controller
                 $message = "Votre Formateur a été ajouté";
                 $erreurs = null;
             }
-            var_dump($erreurs);
             return $view->with('erreurs', $erreurs)
                 ->with('message', $message);
         } else {

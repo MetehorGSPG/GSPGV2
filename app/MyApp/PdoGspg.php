@@ -234,7 +234,10 @@ class PdoGspg
 	}
 
 	public function getInfosConvention($libelle, $id){
-		$req = "select stagiaire.nom as nomStagiaire, stagiaire.prenom as prenomStagiaire, entreprise.nom as nomEntreprise, formateur.nom as nomFormateur 
+		$req = "select stagiaire.nom as nomStagiaire, stagiaire.prenom as prenomStagiaire, stagiaire.adresse as adresseStagiaire, stagiaire.tel as telStagiaire, stagiaire.mail as mailStagiaire, 
+		entreprise.nom as nomEntreprise, entreprise.adresse as adresseEntreprise, entreprise.ville as villeEntreprise, entreprise.mail as mailEntreprise, entreprise.tel as telEntreprise, entreprise.nomTuteurStage as nomTuteurStage, entreprise.telTuteurStage as telTuteurStage, 
+		formateur.nom as nomFormateur, formateur.prenom as prenomFormateur, formateur.tel as telFormateur,
+		stage.dateDebut as dateDebutStage, stage.dateFin as dateFinStage
 		from stageStagiaire, stagiaire, entreprise, formateur, stage
 		where stageStagiaire.idFormateur = formateur.id 
 		and stageStagiaire.idEntreprise = entreprise.id
@@ -268,11 +271,41 @@ class PdoGspg
 	}
 
 	
-	public function majConventionSigne($id, $conventionSigne)
+	public function conventionSigneMaj($idConvention, $signe)
 	{
-		$req = "update stageStagiaire set conventionSigne = '$conventionSigne'";
-		$req .= "where id = '$id'";
+		$req = "update stageStagiaire set conventionSigne = '$signe'";
+		$req .= "where id = '$idConvention'";
 		$rs = $this->monPdo->exec($req);
 		return $rs;
+	}
+
+	public function getInfosEtat($lesCases, $promotion){
+		$req = "select entreprise.nom as nomEntreprise ";
+		$okToutesPromotions = 'off';
+		foreach ($lesCases as $cle => $value) {
+			
+			if($value == 'chkNomStagiaire'){
+				$req .=  ", stagiaire.nom as nomStagiaire ";
+			}
+			if($value == 'chkPrenomStagiaire'){
+				$req .=  ", stagiaire.prenom as prenomStagiaire ";
+			}
+			if($value == 'chkAdresseEntreprise'){
+				$req .=  ", entreprise.adresse as adresseEntreprise " ;
+			}
+			if($value == 'chkToutesLesPromotions'){
+				$okToutesPromotions = 'on';
+			}
+		}
+		$req .= "from stageStagiaire, stagiaire, entreprise, stage ";
+		$req .= "where stageStagiaire.idEntreprise = entreprise.id ";
+		$req .= "and stageStagiaire.idStagiaire = stagiaire.id ";
+		$req .= "and stageStagiaire.idStage = stage.id ";
+		if($okToutesPromotions == 'off'){
+			$req .= "and stagiaire.promotion = '$promotion'";
+		}
+		$rs = $this->monPdo->query($req);
+		$lignes = $rs->fetchAll();
+		return $lignes;
 	}
 }
