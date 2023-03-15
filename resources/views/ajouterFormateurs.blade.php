@@ -10,13 +10,13 @@
                 <fieldset>
                     @includeWhen($erreurs != null, 'msgerreurs', ['erreurs' => $erreurs]) 
                     @includeWhen($message != "", 'message', ['message' => $message])
-                    <p><label>nom : </label>
+                    <p><label>Nom : </label>
                         <input type="text" name="nom">
-                    <p><label>prenom : </label>
+                    <p><label>Prénom : </label>
                         <input type="text" name="prenom">
-                    <p><label>mail  : </label>
+                    <p><label>Adresse mail  : </label>
                         <input type="mail" name="mail">
-                    <p><label>tel : </label>
+                    <p><label>Numéro de télephone du formateur : </label>
                         <input type="text" name="tel">
                 </fieldset>
             </div>

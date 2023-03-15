@@ -18,11 +18,11 @@
                 <input type="text" name="ville">
             <p><label>Adresse mail : </label>
                 <input type="text" name="mail">
-            <p><label>Numéro de télephone : </label>
+            <p><label>Numéro de télephone de l'entreprise : </label>
                  <input type="text" name="tel">
-            <p><label>Nom du tuteur de stage : </label>
+            <p><label>Nom et Prénom du tuteur de stage : </label>
                  <input type="text" name="nomTuteurStage">
-            <p><label>Numéro du tuteur de stage : </label>
+            <p><label>Numéro de téléphone du tuteur de stage : </label>
                  <input type="text" name="telTuteurStage">
         </fieldset>
     </div><!--fin classForm-->

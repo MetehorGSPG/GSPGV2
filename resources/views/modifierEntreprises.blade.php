@@ -18,11 +18,11 @@
                 <input type="text" name="ville" value="{{$ville}}">
             <p><label>Adresse Mail : </label>
                 <input type="text" name="mail" value="{{$mail}}">
-            <p><label>Numéro de Téléphone : </label>
+            <p><label>Numéro de Téléphone de l'entreprise : </label>
                  <input type="text" name="tel" value="{{$tel}}">
-            <p><label>Nom du tuteur de stage : </label>
+            <p><label>Nom et Prénom du tuteur de stage : </label>
                 <input type="text" name="nomTuteurStage" value="{{$nomTuteurStage}}">
-            <p><label>Télephone du tuteur de stage : </label>
+            <p><label>Numéro de télephone du tuteur de stage : </label>
             <input type="text" name="telTuteurStage" value="{{$telTuteurStage}}">
             <input type='hidden' name = 'id' size = 7 value="{{ $id }}">
         </fieldset>

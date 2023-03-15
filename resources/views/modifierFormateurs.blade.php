@@ -10,13 +10,13 @@
                 <fieldset>
                     @includeWhen($erreurs != null, 'msgerreurs', ['erreurs' => $erreurs])
                     @includeWhen($message != '', 'message', ['message' => $message])
-                    <p><label>nom </label>
+                    <p><label>Nom </label>
                         <input type="text" name="nom" value="{{ $nom }}">
-                    <p><label>prenom : </label>
+                    <p><label>Prénom : </label>
                         <input type="text" name="prenom" value="{{ $prenom }}">
-                    <p><label>mail : </label>
+                    <p><label>Adresse mail : </label>
                         <input type="mail" name="mail" value="{{ $mail }}">
-                    <p><label>tel : </label>
+                    <p><label>Numéro de téléphone du formateur : </label>
                         <input type="text" name="tel" value="{{ $tel }}">
                         <input type='hidden' name='id' size=7 value="{{ $id }}">
                 </fieldset>

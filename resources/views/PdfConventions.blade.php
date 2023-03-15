@@ -273,7 +273,7 @@
             </p>
         </div>
         <p>
-            Fait à Paris le JJ/MM/AAAA, en 3 exemplaires
+            Fait à Paris le {{$date}}, en 3 exemplaires
         </p>
 
         <div class="signatures">

@@ -30,6 +30,6 @@
             @endforeach
         </Table>
         <br>
-       <center> <a href="{{ route('chemin_ajouterEntreprise') }}" title="Ajouter une entreprise">Ajouter des entreprises</a></center>
+       <center> <a href="{{ route('chemin_ajouterEntreprise') }}" title="Ajouter une entreprise">Ajouter une entreprise</a></center>
     </div>
 @endsection
